@@ -8,7 +8,7 @@
  *     http://www.apache.org/licenses/LICENSE-2.0  
  */
 
-import { Instruction } from "../../vm/Instruction.js";
+import { Instruction } from "lightvm";
 import { Scope } from "../../parser/Scope.js";
 import { NewExpression } from "../../ast/index.js";
 import { compileExpr } from "../expression/compileExpr.js";

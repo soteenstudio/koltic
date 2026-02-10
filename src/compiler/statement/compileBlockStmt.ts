@@ -10,16 +10,16 @@
 
 import { BlockStatement, Statement } from "../../ast/index.js";
 import { Scope } from "../../parser/Scope.js";
-import { Instruction } from "../../vm/Instruction.js";
+import { Instruction } from "lightvm";
 import { compileStatement } from "./compileStmt.js";
 
-export function compileBlockStmt(stmt: BlockStatement, code: Instruction[], scope: Scope) {
+export function compileBlockStmt(stmt: BlockStatement, code: Instruction[], scope: Scope, moduleId: string) {
   const s = stmt;
   const blockScope: Scope = {
     kinds: Object.create(null),
     types: Object.create(null),
     parent: scope
   };
-  s.body.forEach((child: Statement) => compileStatement(child, blockScope, code));
+  s.body.forEach((child: Statement) => compileStatement(child, blockScope, code, moduleId));
   return [];
 }

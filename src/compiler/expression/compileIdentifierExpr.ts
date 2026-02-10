@@ -9,7 +9,7 @@
  */
 
 import { Identifier } from "../../ast/index.js";
-import { Instruction } from "../../vm/Instruction.js";
+import { Instruction } from "lightvm";
 import { Scope } from "../../parser/Scope.js";
 import { findScopeForVar } from "../../utils/index.js";
 import { CustomError } from "../../error.js";

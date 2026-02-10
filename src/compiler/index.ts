@@ -16,7 +16,10 @@ import { run } from "./compiler.js";
 import { ModuleTable } from "../module/ModuleTable.js";
 import { LightCache } from "../cache/LightCache.js";
 import { hashSource, loadConfig } from "../utils/index.js";
-import { optimizeBytecode } from "../vm/optimizeBytecode.js";
+import { LightVM } from "lightvm";
+
+const vm = new LightVM();
+const optimizeBytecode = vm.tools().optimizeBytecode;
 
 export function compileProgram(entryFile: string) {
   const config = loadConfig();
@@ -36,7 +39,7 @@ export function compileProgram(entryFile: string) {
       const cachedBytecode = LightCache.get(abs, hash);
       if (cachedBytecode) {
         ModuleTable.set(abs, {
-          ast: null,
+          ast: { type: "Program", body: [] },
           bytecode: cachedBytecode,
           exports: {},
         });
@@ -71,7 +74,7 @@ export function compileProgram(entryFile: string) {
       meta.bytecode = optimized;
       
       if (config.compilerOptions.cache) LightCache.set(id, hash, optimized);
-        meta.ast = null;
+        meta.ast = { type: "Program", body: [] };
     }
   }
 

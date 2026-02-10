@@ -12,7 +12,7 @@ import { ModuleTable } from "../../module/ModuleTable.js";
 import { CustomError } from "../../error.js";
 import { ExportStatement } from "../../ast/index.js";
 import { Scope } from "../../parser/Scope.js";
-import { Instruction } from "../../vm/Instruction.js";
+import { Instruction } from "lightvm";
 
 export function compileExportStmt(
   stmt: ExportStatement,

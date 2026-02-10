@@ -11,14 +11,15 @@
 import { Lexer } from "../lexer.js";
 import { Parser } from "../parser/index.js";
 import { run } from "../compiler/compiler.js";
-import { runBytecode } from "../vm/index.js";
+import { LightVM, Instructions } from "lightvm";
 import { setName } from "../error.js";
 import { formatDuration, warning, loadConfig } from "../utils/index.js";
 import { figures } from "../utils/figures.js";
-import { Instruction } from '../vm/Instruction.js';
-import { stringifyLTC } from "../vm/loader.js";
 import fs from "node:fs";
 import path from "node:path";
+
+const vm = new LightVM();
+const loader = vn.tools.loader;
 
 export function compileFile(filename: string, perform: boolean): void {
   if (filename.endsWith(".lt")) {
@@ -43,7 +44,7 @@ export function compileFile(filename: string, perform: boolean): void {
     const cEnd = process.hrtime.bigint();
     
     const wStart = process.hrtime.bigint();
-    const stringData = stringifyLTC(bytecode);
+    const stringData = loader.stringifyLTC(bytecode);
     
     if (perform) {
       const tTime = formatDuration(Number(tEnd - tStart) / 1_000_000);

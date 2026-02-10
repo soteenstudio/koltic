@@ -12,7 +12,7 @@ import { AssignmentStatement, Literal } from "../../ast/index.js";
 import { CustomError } from "../../error.js";
 import { compileExpr } from "../expression/compileExpr.js";
 import { Scope } from "../../parser/Scope.js";
-import { Instruction } from "../../vm/Instruction.js";
+import { Instruction } from "lightvm";
 import { findScopeForVar, normalizeType, getValueType, isNumberFamily, isAnyType } from "../../utils/index.js";
 
 export function compileAssignStmt(stmt: AssignmentStatement, code: Instruction[], scope: Scope) {

@@ -9,7 +9,7 @@
  */
 
 import { Literal } from "../../ast/index.js";
-import { Instruction } from "../../vm/Instruction.js";
+import { Instruction } from "lightvm";
 import { Scope } from "../../parser/Scope.js";
 import { Lexer } from "../../lexer.js";
 import { Parser } from "../../parser/index.js";

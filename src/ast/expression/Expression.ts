@@ -20,6 +20,7 @@ import { NoValueExpression } from "./NoValueExpression.js";
 import { ArrayLiteral } from "./ArrayLiteral.js";
 import { NewExpression } from "./NewExpression.js";
 import { ArrowFunction } from "./ArrowFunction.js";
+import { FunctionExpression } from "./FunctionExpression.js";
 
 export type Expression =
   | Literal
@@ -33,4 +34,5 @@ export type Expression =
   | NoValueExpression
   | ArrayLiteral
   | NewExpression
-  | ArrowFunction;
+  | ArrowFunction
+  | FunctionExpression;

@@ -37,7 +37,7 @@ import { compileImportStmt } from "./compileImportStmt.js";
 import { compileExportStmt } from "./compileExportStmt.js";
 import { compileExpr } from "../expression/compileExpr.js";
 import { Scope } from "../../parser/Scope.js";
-import { Instruction } from "../../vm/Instruction.js";
+import { Instruction } from "lightvm";
 import { types } from "../../utils/getValueType.js";
 
 export function compileStatement(
@@ -54,7 +54,7 @@ export function compileStatement(
       return compileAssignStmt(stmt, code, scope);
     }
     case "BlockStatement": {
-      return compileBlockStmt(stmt, code, scope);
+      return compileBlockStmt(stmt, code, scope, moduleId);
     }
     case "IfStatement": {
       return compileIfStmt(stmt, code, scope, moduleId);

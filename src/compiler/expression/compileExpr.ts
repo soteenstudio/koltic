@@ -23,7 +23,12 @@ import { Instruction } from "../../vm/Instruction.js";
 import { Expression, CallExpression, ObjectLiteral } from "../../ast/index.js";
 import { Scope } from "../../parser/Scope.js";
 
-export function compileExpr(node: Expression, scope: Scope, isTypeCheck: boolean = false): Instruction[] {
+export function compileExpr(
+  node: Expression,
+  scope: Scope,
+  isTypeCheck: boolean = false,
+  moduleId?: string
+): Instruction[] {
   const code: Instruction[] = [];
   switch (node.type) {
     case "Literal": {
@@ -54,7 +59,7 @@ export function compileExpr(node: Expression, scope: Scope, isTypeCheck: boolean
       return compileArrowExpr(node, code, scope);
     }
     case "FunctionExpression": {
-      return compileFunctionExpr(node, code, scope);
+      return compileFunctionExpr(node, code, scope, moduleId);
     }
     default:
       return [];

@@ -10,8 +10,10 @@
 
 import fs from "fs";
 import path from "path";
-import { Instruction } from "../vm/Instruction.js";
-import { parseLTC, stringifyLTC } from "../vm/loader.js";
+import { LightVM, Instruction } from "lightvm";
+
+const vm = new LightVM();
+const loader = vm.tools.loader;
 
 const CACHE_VERSION = 1;
 const CACHE_DIR = ".lightcache";
@@ -62,7 +64,7 @@ export class LightCache {
     const meta = this.index[moduleId];
     if (!meta || meta.hash !== hash) return null;
   
-    const bytecode: Instruction[] = parseLTC(
+    const bytecode: Instruction[] = loader.parseLTC(
       fs.readFileSync(meta.bytecodeFile, "utf8")
     );
   
@@ -77,7 +79,7 @@ export class LightCache {
     const id = hash.slice(0, 8);
     const ltcFile = path.join(MODULE_DIR, id + ".ltc");
 
-    fs.writeFileSync(ltcFile, stringifyLTC(bytecode));
+    fs.writeFileSync(ltcFile, loader.stringifyLTC(bytecode));
 
     this.index[moduleId] = {
       hash,

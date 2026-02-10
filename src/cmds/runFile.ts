@@ -11,7 +11,7 @@
 import { Lexer } from "../lexer.js";
 import { Parser } from "../parser/index.js";
 import { compileProgram } from "../compiler/index.js";
-import { LightVM } from "../vm/index.js";
+import { LightVM } from "lightvm";
 import { setName } from "../error.js";
 import { formatDuration, warning, loadConfig } from "../utils/index.js";
 import { figures } from "../utils/figures.js";

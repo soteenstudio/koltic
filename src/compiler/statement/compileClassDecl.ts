@@ -8,9 +8,9 @@
  *     http://www.apache.org/licenses/LICENSE-2.0  
  */
 
-import { Instruction } from "../../vm/Instruction.js";
+import { Instruction } from "lightvm";
 import { Scope } from "../../parser/Scope.js";
-import { ClassDeclaration, VariableDeclaration, FunctionDeclaration } from "../../ast/index.js";
+import { ClassDeclaration, VarDeclaration, FunctionDeclaration } from "../../ast/index.js";
 import { compileExpr } from "../expression/compileExpr.js";
 import { compileStatement } from "./compileStmt.js";
 
@@ -68,11 +68,11 @@ export function compileClassDecl(stmt: ClassDeclaration, code: Instruction[], sc
     
     for (const param of c.params) {
       constructorScope.vars![param.name] = null;
-      constructorScope.kinds[param.name] = param.mutable ? "mut" : "val";
-      constructorScope.types[param.name] = param.varType ?? "any";
+      constructorScope.kinds[param.name] = "mut";
+      constructorScope.types[param.name] = param.paramType ?? "any";
     }
     
-    compileStatement(c.body, constructorScope, code);
+    compileStatement(c.body, constructorScope, code, moduleId);
 
     code.push(["return"]);
     const fnEnd = code.length;
@@ -98,8 +98,8 @@ export function compileClassDecl(stmt: ClassDeclaration, code: Instruction[], sc
     
     for (const param of m.params) {
       methodScope.vars![param.name] = null;
-      methodScope.kinds[param.name] = param.mutable ? "mut" : "val";
-      methodScope.types[param.name] = param.varType ?? "any";
+      methodScope.kinds[param.name] = "mut";
+      methodScope.types[param.name] = param.paramType ?? "any";
     }
     
     compileStatement(m.body, methodScope, code, moduleId);

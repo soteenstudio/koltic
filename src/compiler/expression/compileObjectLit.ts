@@ -9,7 +9,7 @@
  */
 
 import { ObjectLiteral, FunctionExpression } from "../../ast/index.js";
-import { Instruction } from "../../vm/Instruction.js";
+import { Instruction } from "lightvm";
 import { Scope } from "../../parser/Scope.js";
 import { compileExpr } from "./compileExpr.js";
 

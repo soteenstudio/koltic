@@ -9,7 +9,7 @@
  */
 
 import { ForStatement } from "../../ast/index.js";
-import { Instruction } from "../../vm/Instruction.js";
+import { Instruction } from "lightvm";
 import { Scope } from "../../parser/Scope.js";
 import { compileExpr } from "../expression/compileExpr.js";
 import { compileStatement } from "./compileStmt.js";

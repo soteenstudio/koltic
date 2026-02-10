@@ -10,7 +10,7 @@
 
 import { UpdateExpression, Identifier } from "../../ast/index.js";
 import { Scope } from "../../parser/Scope.js";
-import { Instruction } from "../../vm/Instruction.js";
+import { Instruction } from "lightvm";
 import { CustomError } from "../../error.js";
 import { findScopeForVar, normalizeType, isNumberFamily } from "../../utils/index.js";
 

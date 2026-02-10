@@ -13,7 +13,7 @@ import { ModuleTable } from "../../module/ModuleTable.js";
 import { resolveImport } from "../index.js";
 import { ImportStatement } from "../../ast/index.js";
 import { Scope } from "../../parser/Scope.js";
-import { Instruction } from "../../vm/Instruction.js";
+import { Instruction } from "lightvm";
 
 export function compileImportStmt(
   stmt: ImportStatement,

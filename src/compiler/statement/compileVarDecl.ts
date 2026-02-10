@@ -14,7 +14,7 @@ import { normalizeType, getValueType, getDeclaredTypeForVar, exprType, isNumberF
 import { types } from "../../utils/getValueType.js";
 import { compileExpr } from "../expression/compileExpr.js";
 import { Scope } from "../../parser/Scope.js";
-import { Instruction } from "../../vm/Instruction.js";
+import { Instruction } from "lightvm";
 
 export function compileVarDecl(stmt: VarDeclaration, code: Instruction[], scope: Scope) {
   const s = stmt;
@@ -129,7 +129,7 @@ export function compileVarDecl(stmt: VarDeclaration, code: Instruction[], scope:
   scope.types[s.identifier] = declared + (nullable ? "?" : "");
   code.push(["val", s.identifier]);
   if (s.expression.type !== "NoInitExpression") {
-    code.push(...compileExpr(s.expression, scope));
+    code.push(...compileExpr(s.expression, scope, false));
     code.push(["set", s.identifier]);
   }
   return [];

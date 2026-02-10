@@ -10,13 +10,8 @@ const builds = [
     entryPoints: ['./src/index.ts'],
     format: 'cjs',
     outfile: 'dist/index.min.cjs',
-  },
-  {
-    entryPoints: ['./src/vm/index.ts'],
-    format: 'esm',
-    outfile: 'dist/vm.min.mjs',
   }
-];
+]
 
 for (const config of builds) {
   esbuild.build({
@@ -25,6 +20,6 @@ for (const config of builds) {
     sourcemap: true,
     platform: 'node',
     ...config,
-    external: ["chalk", "commander", "wabt"],
+    external: ["chalk", "commander", "wabt", " lightvm"],
   }).catch(() => process.exit(1))
 }

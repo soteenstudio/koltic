@@ -41,3 +41,4 @@ export { NoInitExpression } from "./expression/NoInitExpression.js";
 export { NoValueExpression } from "./expression/NoValueExpression.js";
 export { ArrayLiteral } from "./expression/ArrayLiteral.js";
 export { NewExpression } from "./expression/NewExpression.js";
+export { FunctionExpression } from "./expression/FunctionExpression.js";
