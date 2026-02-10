@@ -22,7 +22,7 @@ jobs:
           node-version: '22' # Sesuaikan sama versi Node kamu
 
       - name: Install Dependencies
-        run: npm einstall
+        run: npm install
       
       - name: Type Check
         run: npm run typecheck
