@@ -19,4 +19,4 @@ export { gt_i32, gt_i64, gt_f32, gt_f64 } from "./math/gt";
 export { ge_i32, ge_i64, ge_f32, ge_f64 } from "./math/ge";
 export { inc_i32, inc_i64, inc_f32, inc_f64 } from "./math/inc";
 export { dec_i32, dec_i64, dec_f32, dec_f64 } from "./math/dec";
-export { tSet, tGet, tDelete, tHas, tClear, tConcat } from "./temperal/index";
+//export { tSet, tGet, tDelete, tHas, tClear, tConcat } from "./temperal/index";
