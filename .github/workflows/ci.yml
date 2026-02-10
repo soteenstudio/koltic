@@ -1,0 +1,40 @@
+name: Code Quality Check
+
+# Kapan automation ini jalan? 
+# Tiap kali ada Push atau Pull Request ke branch main
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest # Pake server Linux-nya GitHub
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4 # Ambil kode kamu dari repo
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Sesuaikan sama versi Node kamu
+
+      - name: Install Dependencies
+        run: npm install
+
+      # 1. CEK ERROR: Coba build pake esbuild
+      - name: Check Build
+        run: npm run build 
+
+      # 2. CEK HEADER: Jalanin script audit kamu (nanti gue ajarin script-nya)
+      - name: Audit Copyright Header
+        run: |
+          # Contoh script simpel buat ngecek kata "Copyright" di file .ts
+          if grep -q "Copyright" ./src/**/*.ts; then
+            echo "Header aman!"
+          else
+            echo "Waduh, ada file yang belum ada header 2026-nya!"
+            exit 1 # Bikin automation-nya gagal/merah
+          fi
