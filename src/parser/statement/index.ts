@@ -1,0 +1,12 @@
+export { parseVarDecl } from "./varDecl.js";
+export { parseIfStmt } from "./ifStmt.js";
+export { parseForStmt } from "./forStmt.js";
+export { parseFunDecl } from "./funDecl.js";
+export { parseReturnStmt } from "./returnStmt.js";
+export { parseSwitchStmt } from "./parseSwitchStmt.js";
+export { parseBreakStmt } from "./breakStmt.js";
+export { parseContinueStmt } from "./continueStmt.js";
+export { parseWhileStmt } from "./whileStmt.js";
+export { parseClassDecl } from "./parseClassDecl.js";
+export { parseImportStmt } from "./parseImportStmt.js";
+export { parseExportStmt } from "./parseExportStmt.js";

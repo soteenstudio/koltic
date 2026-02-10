@@ -1,0 +1,24 @@
+{
+  "name": "lightscript",
+  "version": "0.1.0-notable",
+  "description": "m",
+  "type": "module",
+  "main": ".",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node ./esbuild.config.js && asc ./assembly/src/index.ts -o ./assembly/dist/main.wasm",
+    "typecheck": "tsc"
+  },
+  "keywords": [
+    "lightscript"
+  ],
+  "author": "SoTeen Studio",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^24.8.0",
+    "chalk": "^5.6.2",
+    "commander": "^14.0.1",
+    "esbuild": "^0.25.10",
+    "wabt": "^1.0.38"
+  }
+}

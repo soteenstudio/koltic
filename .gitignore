@@ -1,0 +1,6 @@
+/dist/
+/node_modules/
+/tests/
+/assembly/src/temperal/
+lightconfig.json
+.npmignore

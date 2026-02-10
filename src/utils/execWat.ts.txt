@@ -1,0 +1,46 @@
+// execWat.ts
+import wabt from "wabt";
+
+let Wabt: any = null;
+let wabtReady: Promise<void> | null = null;
+
+// cache untuk setiap kode WAT
+const wasmCache = new Map<string, WebAssembly.Instance>();
+
+// load WABT sekali doang
+async function initWabt() {
+  if (!Wabt) {
+    Wabt = await wabt();
+  }
+}
+
+wabtReady = initWabt();
+
+export function execWat(src: string) {
+  if (!Wabt) throw new Error("WABT belum siap, pastikan modul sudah load");
+
+  // kalau udah pernah compile, pakai cache
+  if (wasmCache.has(src)) {
+    const cached = wasmCache.get(src)!;
+    if (cached.exports._start) return cached.exports._start();
+    if (cached.exports.main) return cached.exports.main();
+    return cached.exports;
+  }
+
+  // parsing & compile WAT ke WASM
+  const wasmModule = Wabt.parseWat("virtual.wat", src);
+  const { buffer } = wasmModule.toBinary({ write_debug_names: true });
+
+  // instantiate WASM sync
+  const module = new WebAssembly.Module(buffer);
+  const instance = new WebAssembly.Instance(module);
+
+  // simpan cache
+  wasmCache.set(src, instance);
+
+  // jalankan main atau _start kalo ada
+  if (instance.exports._start) return instance.exports._start();
+  if (instance.exports.main) return instance.exports.main();
+
+  return instance.exports;
+}

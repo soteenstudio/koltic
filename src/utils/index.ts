@@ -1,0 +1,16 @@
+export { getValueType } from "./getValueType.js";
+export { normalizeType } from "./normalizeType.js";
+export { getFromScope } from "./getFromScope.js";
+export { findScopeForVar } from "./findScopeForVar.js";
+export { getDeclaredTypeForVar } from "./getDeclaredTypeForVar.js";
+//export { execWat } from "./execWat.js";
+export { loadWasm } from "./loadWasm.js";
+export { exprType } from "./exprType.js";
+export { getDeclaredValue } from "./getDeclaredValue.js";
+export { autoInsertSemicolons } from "./autoInsertSemicolons.js";
+export { isNumberFamily } from "./isNumberFamily.js";
+export { isAnyType } from "./isAnyType.js";
+export { formatDuration } from "./formatDuration.js";
+export { warning } from "./warning.js";
+export { loadConfig } from "./loadConfig.js";
+export { hashSource } from "./hashSource.js";
