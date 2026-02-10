@@ -28,13 +28,15 @@ jobs:
       - name: Check Build
         run: npm run build 
 
-      # 2. CEK HEADER: Jalanin script audit kamu (nanti gue ajarin script-nya)
       - name: Audit Copyright Header
         run: |
-          # Contoh script simpel buat ngecek kata "Copyright" di file .ts
-          if grep -q "Copyright" ./src/**/*.ts; then
-            echo "Header aman!"
+          # Cari file .ts yang GAK ada kata "Copyright"
+          MISSING_HEADERS=$(grep -L "Copyright" ./src/**/*.ts)
+
+          if [ -z "$MISSING_HEADERS" ]; then
+            echo "✅ Semua file udah ada headernya. Mantap Clay!"
           else
-            echo "Waduh, ada file yang belum ada header 2026-nya!"
-            exit 1 # Bikin automation-nya gagal/merah
+            echo "❌ Waduh, file-file ini belum ada headernya:"
+            echo "$MISSING_HEADERS"
+            exit 1 # Gagalin build biar gak lolos
           fi
