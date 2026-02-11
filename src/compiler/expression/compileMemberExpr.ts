@@ -13,13 +13,13 @@ import { Scope } from "../../parser/Scope.js";
 import { MemberExpression, Expression } from "../../ast/index.js";
 import { compileExpr } from "./compileExpr.js";
 
-export function compileMemberExpr(node: MemberExpression, code: Instruction[], scope: Scope): Instruction[] {
-  code.push(...compileExpr(node.object, scope));
+export function compileMemberExpr(node: MemberExpression, code: Instruction[], scope: Scope, moduleId: string): Instruction[] {
+  code.push(...compileExpr(node.object, scope, false, moduleId));
 
   if (typeof node.property === "string") {
     code.push(["access", node.property]);
   } else {
-    code.push(...compileExpr(node.property as Expression, scope));
+    code.push(...compileExpr(node.property as Expression, scope, false, moduleId));
     code.push(["access_index"]);
   }
 

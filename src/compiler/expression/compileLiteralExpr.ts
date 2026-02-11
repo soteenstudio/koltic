@@ -17,7 +17,7 @@ import { compileExpr } from "../expression/compileExpr.js";
 import { findScopeForVar } from "../../utils/index.js";
 import { CustomError } from "../../error.js";
 
-export function compileLiteralExpr(node: Literal, code: Instruction[], scope: Scope) {
+export function compileLiteralExpr(node: Literal, code: Instruction[], scope: Scope, moduleId: string) {
   const val = node.value;
 
   if (typeof val === "string") {
@@ -31,7 +31,7 @@ export function compileLiteralExpr(node: Literal, code: Instruction[], scope: Sc
         const exprTokens = new Lexer(exprStr).tokenize();
         const exprAst = new Parser(exprTokens, node.line, node.column).parseExpression();
         
-        const innerCode = compileExpr(exprAst, scope);
+        const innerCode = compileExpr(exprAst, scope, false, moduleId);
         code.push(...innerCode);
         
         exprCount++;

@@ -17,7 +17,7 @@ import { compileStatement } from "./compileStmt.js";
 export function compileIfStmt(stmt: IfStatement, code: Instruction[], scope: Scope, moduleId: string) {
   const s = stmt;
 
-  code.push(...compileExpr(s.test, scope));
+  code.push(...compileExpr(s.test, scope, false, moduleId));
 
   const ifFalseIndex = code.length;
   code.push(["if_false", -1]);

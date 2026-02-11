@@ -9,7 +9,7 @@
  */
 
 import { CallExpression, Expression } from "../../ast/index.js";
-import { Instruction } from "../../vm/Instruction.js";
+import { Instruction } from "lightvm";
 import { Scope } from "../../parser/Scope.js";
 import { CustomError } from "../../error.js";
 import { compileExpr } from "./compileExpr.js";
@@ -23,7 +23,7 @@ import {
 } from "../../utils/index.js";
 import { functions } from "../compiler.js";
 
-export function compileCallExpr(node: CallExpression, code: Instruction[], scope: Scope): Instruction[] {
+export function compileCallExpr(node: CallExpression, code: Instruction[], scope: Scope, moduleId: string): Instruction[] {
   const call = node;
 
   // 🔹 built-in functions
@@ -43,7 +43,7 @@ export function compileCallExpr(node: CallExpression, code: Instruction[], scope
   
     if (manyArg.includes(call.callee.name)) {
       for (let i = 0; i < call.args.length; i++) {
-        code.push(...compileExpr(call.args[i], scope, isTypeCheck));
+        code.push(...compileExpr(call.args[i], scope, isTypeCheck, moduleId));
         if (i < call.args.length - 1) {
           code.push(["print"]);
           code.push(["push", "::space"]);
@@ -61,7 +61,7 @@ export function compileCallExpr(node: CallExpression, code: Instruction[], scope
           node.column ?? 0
         );
       }
-      code.push(...compileExpr(call.args[0], scope, isTypeCheck));
+      code.push(...compileExpr(call.args[0], scope, isTypeCheck, moduleId));
       code.push([builtins[call.callee.name] as any]);
     }
   
@@ -125,7 +125,7 @@ export function compileCallExpr(node: CallExpression, code: Instruction[], scope
   }
 
   call.args.forEach((arg: Expression) => {
-    code.push(...compileExpr(arg, scope));
+    code.push(...compileExpr(arg, scope, false, moduleId));
   });
 
   code.push(["call", call.callee.name, call.args.length]);

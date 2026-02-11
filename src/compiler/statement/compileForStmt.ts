@@ -30,7 +30,7 @@ export function compileForStmt(stmt: ForStatement, code: Instruction[], scope: S
   const testStart = code.length;
 
   if (s.test) {
-    code.push(...compileExpr(s.test, forScope));
+    code.push(...compileExpr(s.test, forScope, false, moduleId));
     code.push(["if_false", -1]);
   }
 

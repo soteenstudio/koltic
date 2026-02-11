@@ -9,16 +9,16 @@
  */
 
 import { BinaryExpression } from "../../ast/index.js";
-import { Instruction } from "../../vm/Instruction.js";
+import { Instruction } from "lightvm";
 import { Scope } from "../../parser/Scope.js";
 import { exprType, normalizeType, getValueType } from "../../utils/index.js";
 import { CustomError } from "../../error.js";
 import { compileExpr } from "./compileExpr.js";
 
-export function compileBinaryExpr(node: BinaryExpression, code: Instruction[], scope: Scope) {
+export function compileBinaryExpr(node: BinaryExpression, code: Instruction[], scope: Scope, moduleId: string) {
   const bin = node;
-  const left = compileExpr(bin.left, scope);
-  const right = compileExpr(bin.right, scope);
+  const left = compileExpr(bin.left, scope, false, moduleId);
+  const right = compileExpr(bin.right, scope, false, moduleId);
   const leftType = normalizeType(exprType(bin.left, scope));
   const rightType = normalizeType(exprType(bin.right, scope));
   if (leftType !== rightType) {

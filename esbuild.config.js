@@ -5,13 +5,8 @@ const builds = [
     entryPoints: ['./src/index.ts'],
     format: 'esm',
     outfile: 'dist/index.min.mjs',
-  },
-  {
-    entryPoints: ['./src/index.ts'],
-    format: 'cjs',
-    outfile: 'dist/index.min.cjs',
   }
-]
+];
 
 for (const config of builds) {
   esbuild.build({

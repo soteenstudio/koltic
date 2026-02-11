@@ -17,9 +17,9 @@ import { compileMemberExpr } from "./compileMemberExpr.js";
 import { compileCallExpr } from "./compileCallExpr.js";
 import { compileUpdExpr } from "./compileUpdExpr.js";
 import { compileArrowExpr } from "./compileArrowExpr.js";
-import { compileFunctionExpr } from "./compileFunExpr.ts";
+import { compileFunctionExpr } from "./compileFunExpr.js";
 import { CustomError } from "../../error.js";
-import { Instruction } from "../../vm/Instruction.js";
+import { Instruction } from "lightvm";
 import { Expression, CallExpression, ObjectLiteral } from "../../ast/index.js";
 import { Scope } from "../../parser/Scope.js";
 
@@ -27,30 +27,30 @@ export function compileExpr(
   node: Expression,
   scope: Scope,
   isTypeCheck: boolean = false,
-  moduleId?: string
+  moduleId: string
 ): Instruction[] {
   const code: Instruction[] = [];
   switch (node.type) {
     case "Literal": {
-      return compileLiteralExpr(node, code, scope);
+      return compileLiteralExpr(node, code, scope, moduleId);
     }
     case "Identifier": {
       return compileIdentifierExpr(node, code, scope, isTypeCheck);
     }
     case "BinaryExpression": {
-      return compileBinaryExpr(node, code, scope);
+      return compileBinaryExpr(node, code, scope, moduleId);
     }
     case "ObjectLiteral": {
-      return compileObjectLit(node, code, scope);
+      return compileObjectLit(node, code, scope, moduleId);
     }
     case "ArrayLiteral": {
       return compileArrayLit(node, code, scope);
     }
     case "MemberExpression": {
-      return compileMemberExpr(node, code, scope);
+      return compileMemberExpr(node, code, scope, moduleId);
     }
     case "CallExpression": {
-      return compileCallExpr(node, code, scope);
+      return compileCallExpr(node, code, scope, moduleId);
     }
     case "UpdateExpression": {
       return compileUpdExpr(node, code, scope);

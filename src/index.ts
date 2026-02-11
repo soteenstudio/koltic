@@ -6,8 +6,8 @@ import { compileFile } from "./cmds/compileFile.js";
 const program = new Command();
 
 program
-  .name('light')
-  .description('LightScript command line interface tools')
+  .name('koltic')
+  .description('Koltic command line interface tools')
   .version('0.1.0-notable');
 
 // bikin flag -c atau --config

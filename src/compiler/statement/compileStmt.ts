@@ -48,10 +48,10 @@ export function compileStatement(
 ): Instruction[] {
   switch (stmt.type) {
     case "VarDeclaration": {
-      return compileVarDecl(stmt, code, scope);
+      return compileVarDecl(stmt, code, scope, moduleId);
     }
     case 'AssignmentStatement': {
-      return compileAssignStmt(stmt, code, scope);
+      return compileAssignStmt(stmt, code, scope, moduleId);
     }
     case "BlockStatement": {
       return compileBlockStmt(stmt, code, scope, moduleId);
@@ -87,7 +87,7 @@ export function compileStatement(
       }
       
       if (s.expression) {
-        code.push(...compileExpr(s.expression, scope));
+        code.push(...compileExpr(s.expression, scope, false, moduleId));
     
         const exprT = exprType(s.expression, scope);
         const normalized = normalizeType(exprT);
@@ -110,7 +110,7 @@ export function compileStatement(
       return [];
     }
     case 'CallExpression': {
-      code.push(...compileExpr(stmt as CallExpression, scope) ?? []);
+      code.push(...compileExpr(stmt as CallExpression, scope, false, moduleId) ?? []);
       return [];
     }
     case "UpdateExpression": {
@@ -171,7 +171,7 @@ export function compileStatement(
     }
     case "SwitchStatement": {
       const s = stmt as any;
-      code.push(...compileExpr(s.discriminant, scope));
+      code.push(...compileExpr(s.discriminant, scope, false, moduleId));
     
       const endOfSwitchIndexList: number[] = []; 
       const jumpToDefaultIndexList: number[] = [];
@@ -186,7 +186,7 @@ export function compileStatement(
     
         code.push(["get", s.discriminant.name ?? "__switch_temp"]);
     
-        code.push(...compileExpr(c.test, scope));
+        code.push(...compileExpr(c.test, scope, false, moduleId));
     
         code.push(["eq"]);
     
@@ -254,7 +254,7 @@ export function compileStatement(
       const testStart = code.length;
     
       if (s.test) {
-        code.push(...compileExpr(s.test, whileScope));
+        code.push(...compileExpr(s.test, whileScope, false, moduleId));
         code.push(["if_false", -1]);
       }
       const jumpToExitIndex = code.length - 1;

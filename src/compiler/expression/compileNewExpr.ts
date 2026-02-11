@@ -13,12 +13,12 @@ import { Scope } from "../../parser/Scope.js";
 import { NewExpression } from "../../ast/index.js";
 import { compileExpr } from "../expression/compileExpr.js";
 
-export function compileNewExpr(expr: NewExpression, code: Instruction[], scope: Scope) {
+export function compileNewExpr(expr: NewExpression, code: Instruction[], scope: Scope, moduleId: string) {
   const className = expr.className;
   const args = expr.args;
 
   for (const argExpr of args) {
-    code.push(...compileExpr(argExpr, scope));
+    code.push(...compileExpr(argExpr, scope, false, moduleId));
   }
 
   code.push(["instantiate", className, args.length]);

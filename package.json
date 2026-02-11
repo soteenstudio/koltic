@@ -3,10 +3,12 @@
   "version": "0.1.0-notable",
   "description": "Bahasa pemrograman yang dirancang dengan strictness tinggi saat kompilasi",
   "type": "module",
-  "main": ".",
+  "bin": {
+    "koltic": "./dist/index.min.mjs"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node ./esbuild.config.js && asc ./assembly/src/index.ts -o ./assembly/dist/main.wasm",
+    "build": "node ./esbuild.config.js",
     "typecheck": "tsc"
   },
   "keywords": [

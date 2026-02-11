@@ -15,7 +15,7 @@ import { Scope } from "../../parser/Scope.js";
 import { Instruction } from "lightvm";
 import { findScopeForVar, normalizeType, getValueType, isNumberFamily, isAnyType } from "../../utils/index.js";
 
-export function compileAssignStmt(stmt: AssignmentStatement, code: Instruction[], scope: Scope) {
+export function compileAssignStmt(stmt: AssignmentStatement, code: Instruction[], scope: Scope, moduleId: string) {
   const s = stmt;
   const targetScope = findScopeForVar(scope, s.identifier);
   if (!targetScope)
@@ -39,7 +39,7 @@ export function compileAssignStmt(stmt: AssignmentStatement, code: Instruction[]
       }
     }
   }
-  code.push(...compileExpr(s.expression, scope));
+  code.push(...compileExpr(s.expression, scope, false, moduleId));
   code.push(["set", s.identifier]);
   return code;
 }

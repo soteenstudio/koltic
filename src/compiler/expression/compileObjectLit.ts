@@ -16,7 +16,8 @@ import { compileExpr } from "./compileExpr.js";
 export function compileObjectLit(
   node: ObjectLiteral,
   code: Instruction[],
-  scope: Scope
+  scope: Scope,
+  moduleId: string
 ): Instruction[] {
 
   const propCount = node.properties.length;
@@ -39,11 +40,11 @@ export function compileObjectLit(
           ...fn,
           params: [{ name: "this" }, ...fn.params],
         },
-        methodScope
+        methodScope, false, moduleId
       );
 
     } else {
-      compileExpr(prop.value, scope);
+      compileExpr(prop.value, scope, false, moduleId);
     }
   }
 

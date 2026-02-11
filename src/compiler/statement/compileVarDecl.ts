@@ -16,7 +16,12 @@ import { compileExpr } from "../expression/compileExpr.js";
 import { Scope } from "../../parser/Scope.js";
 import { Instruction } from "lightvm";
 
-export function compileVarDecl(stmt: VarDeclaration, code: Instruction[], scope: Scope) {
+export function compileVarDecl(
+  stmt: VarDeclaration,
+  code: Instruction[],
+  scope: Scope,
+  moduleId: string
+) {
   const s = stmt;
   if (s.kind === "val" && s.expression?.type === "NoInitExpression") {
     throw new CustomError(
@@ -129,7 +134,7 @@ export function compileVarDecl(stmt: VarDeclaration, code: Instruction[], scope:
   scope.types[s.identifier] = declared + (nullable ? "?" : "");
   code.push(["val", s.identifier]);
   if (s.expression.type !== "NoInitExpression") {
-    code.push(...compileExpr(s.expression, scope, false));
+    code.push(...compileExpr(s.expression, scope, false, moduleId));
     code.push(["set", s.identifier]);
   }
   return [];

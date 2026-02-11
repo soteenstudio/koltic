@@ -35,7 +35,7 @@ export function compileClassDecl(stmt: ClassDeclaration, code: Instruction[], sc
     const mutable = prop.mutable ?? false;
 
     if (prop.initializer) {
-      code.push(...compileExpr(prop.initializer, classScope));
+      code.push(...compileExpr(prop.initializer, classScope, false, moduleId));
       code.push(["get", className]);
       code.push(["set_prop", name]);
     } else {

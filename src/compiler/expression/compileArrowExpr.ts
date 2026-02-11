@@ -8,7 +8,7 @@
  *     http://www.apache.org/licenses/LICENSE-2.0  
  */
 
-import { Instruction } from "../../vm/Instruction.js";
+import { Instruction } from "lightvm";
 import { Scope } from "../../parser/Scope.js";
 import { ArrowFunction } from "../../ast/index.js";
 import { compileExpr } from "./compileExpr.js";
@@ -17,7 +17,8 @@ import { compileStatement } from "../statement/compileStmt.js";
 export function compileArrowExpr(
   node: ArrowFunction,
   code: Instruction[],
-  scope: Scope
+  scope: Scope,
+  moduleId: string
 ): Instruction[] {
   const fnScope: Scope = {
     kinds: {},
@@ -36,7 +37,7 @@ export function compileArrowExpr(
       bodyCode.push(...compileStmt(stmt, fnScope));
     }
   } else {
-    bodyCode.push(...compileExpr(node.body, fnScope));
+    bodyCode.push(...compileExpr(node.body, fnScope, false, moduleId));
     bodyCode.push(["return"]);
   }
 
@@ -44,7 +45,7 @@ export function compileArrowExpr(
     "push",
     {
       type: "Function",
-      params: node.params.map(p => p.name),
+      params: node.params.map((p: any) => p.name),
       code: bodyCode,
       isArrow: true,
     },
