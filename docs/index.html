@@ -1,12 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
 </head>
 <body>
-  <h1>Helll</h1>
+  <div id="app">Sabar ya, lagi loading...</div>
+  <script>
+    window.$docsify = {
+      name: 'Koltic Documentation', // Nama project kamu
+      repo: 'https://github.com/soteenstudio/koltic',
+      // Settingan buat load file markdown
+      loadSidebar: true,
+      subMaxLevel: 2
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
 </body>
 </html>
