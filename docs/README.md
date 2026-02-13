@@ -4,14 +4,5 @@
 
 Koltic itself draws syntax inspiration from [Kotlin](https://kotlinlang.org) and [JavaScript](https://javascript.com), adopting Kotlin's strictness and adding unique features.
 
-## Get Started
-Running a code
-```bash
-koltic --r main.lt
-```
-Compile a code
-```bash
-koltic -c main.lt
-```
 ## Contribute
 We have provided rules and standards for contributing to the Koltic project that you can follow to get started [contributing](CONTRIBUTING.md).
