@@ -34,7 +34,7 @@ export function compileArrowExpr(
   
   if (node.body.type === "BlockStatement") {
     for (const stmt of node.body.body) {
-      bodyCode.push(...compileStmt(stmt, fnScope));
+      bodyCode.push(...compileStatement(stmt, fnScope, code, moduleId));
     }
   } else {
     bodyCode.push(...compileExpr(node.body, fnScope, false, moduleId));

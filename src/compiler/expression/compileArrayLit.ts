@@ -9,18 +9,23 @@
  */
 
 import { ArrayLiteral, Expression } from "../../ast/index.js";
-import { Instruction } from "../../vm/Instruction.js";
+import { Instruction } from "lightvm";
 import { Scope } from "../../parser/Scope.js";
 import { compileExpr } from "./compileExpr.js";
 
-export function compileArrayLit(node: ArrayLiteral, code: Instruction[], scope: Scope): Instruction[] {
+export function compileArrayLit(
+  node: ArrayLiteral,
+  code: Instruction[],
+  scope: Scope,
+  moduleId: string
+): Instruction[] {
   const elemCount = node.elements.length;
 
   for (const elem of node.elements) {
     if (elem.type === "Literal") {
       code.push(["push", elem.value]);
     } else {
-      compileExpr(elem, scope);
+      compileExpr(elem, scope, false, moduleId);
     }
   }
 

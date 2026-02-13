@@ -11,7 +11,7 @@
 import { Lexer } from "../lexer.js";
 import { Parser } from "../parser/index.js";
 import { run } from "../compiler/compiler.js";
-import { LightVM, Instructions } from "lightvm";
+import { LightVM, Instruction } from "lightvm";
 import { setName } from "../error.js";
 import { formatDuration, warning, loadConfig } from "../utils/index.js";
 import { figures } from "../utils/figures.js";
@@ -19,7 +19,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const vm = new LightVM();
-const loader = vn.tools.loader;
+const loader = vm.tools().loader;
 
 export function compileFile(filename: string, perform: boolean): void {
   if (filename.endsWith(".lt")) {

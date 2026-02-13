@@ -98,7 +98,7 @@ export function run(ast: Program, moduleId: string): Instruction[] {
   }
 
   for (const fName in functions) {
-    compileFunDecl(functions[fName], globalEnv, bytecode);
+    compileFunDecl(functions[fName], globalEnv, bytecode, moduleId);
   }
 
   return bytecode;

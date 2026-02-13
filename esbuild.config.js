@@ -15,6 +15,6 @@ for (const config of builds) {
     sourcemap: true,
     platform: 'node',
     ...config,
-    external: ["chalk", "commander", "wabt", " lightvm"],
+    external: ["chalk", "commander", "lightvm"],
   }).catch(() => process.exit(1))
 }

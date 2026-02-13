@@ -44,7 +44,7 @@ export function compileExpr(
       return compileObjectLit(node, code, scope, moduleId);
     }
     case "ArrayLiteral": {
-      return compileArrayLit(node, code, scope);
+      return compileArrayLit(node, code, scope, moduleId);
     }
     case "MemberExpression": {
       return compileMemberExpr(node, code, scope, moduleId);
@@ -56,7 +56,7 @@ export function compileExpr(
       return compileUpdExpr(node, code, scope);
     }
     case "ArrowFunction": {
-      return compileArrowExpr(node, code, scope);
+      return compileArrowExpr(node, code, scope, moduleId);
     }
     case "FunctionExpression": {
       return compileFunctionExpr(node, code, scope, moduleId);

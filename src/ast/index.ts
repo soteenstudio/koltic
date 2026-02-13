@@ -42,3 +42,4 @@ export { NoValueExpression } from "./expression/NoValueExpression.js";
 export { ArrayLiteral } from "./expression/ArrayLiteral.js";
 export { NewExpression } from "./expression/NewExpression.js";
 export { FunctionExpression } from "./expression/FunctionExpression.js";
+export { ArrowFunction } from "./expression/ArrowFunction.js";

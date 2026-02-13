@@ -13,7 +13,7 @@ import path from "path";
 import { LightVM, Instruction } from "lightvm";
 
 const vm = new LightVM();
-const loader = vm.tools.loader;
+const loader = vm.tools().loader;
 
 const CACHE_VERSION = 1;
 const CACHE_DIR = ".lightcache";

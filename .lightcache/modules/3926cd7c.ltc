@@ -1,0 +1,11 @@
+val i; ;; IP=0
+push 0; ;; IP=1
+set i; ;; IP=2
+get i; ;; IP=3
+push 1000; ;; IP=4
+lt; ;; IP=5
+if_false 11; ;; IP=6
+get i; ;; IP=7
+println; ;; IP=8
+inc i; ;; IP=9
+jump 3; ;; IP=10
