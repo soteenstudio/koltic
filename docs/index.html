@@ -33,12 +33,20 @@
         pattern: /(["'])(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,
         greedy: true
       },
-      'keyword': /\b(if|else|for|while|fun|var|val|return|import|class)\b/, // Ganti pake keyword asli Koltic
+      'keyword': /\b(if|else|for|while|fun|var|val|return|import|class)\b/,
+      // --- INI BAGIAN TYPING ---
+      'type': {
+        pattern: /(:\s*)[A-Z]\w*/, // Nangkep String, Int, dll setelah ":"
+        lookbehind: true,
+        alias: 'class-name' // Biar otomatis ikut warna class di tema Vue
+      },
+      // -------------------------
       'boolean': /\b(true|false)\b/,
       'function': /\b\w+(?=\s*\()/,
       'number': /\b\d+(\.\d+)?\b/,
       'operator': /[<>!=]=?|[-+*/%&|^]=?|[:;.,]/
     };
+
   </script>
   
   <script src="https://cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
