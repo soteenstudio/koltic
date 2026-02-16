@@ -1,3 +1,0 @@
-push "string"; ;; IP=0
-typeof; ;; IP=1
-println; ;; IP=2

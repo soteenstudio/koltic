@@ -1,6 +1,7 @@
 import chalk from "chalk";
 
 export function formatDuration(ms: number): string {
+  ms = ms / 1_000_000;
   const s = ms / 1000;
   const m = s / 60;
   const h = m / 60;

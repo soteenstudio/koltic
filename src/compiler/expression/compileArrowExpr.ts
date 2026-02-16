@@ -10,7 +10,7 @@
 
 import { Instruction } from "lightvm";
 import { Scope } from "../../parser/Scope.js";
-import { ArrowFunction } from "../../ast/index.js";
+import { ArrowFunction, BlockStatement } from "../../ast/index.js";
 import { compileExpr } from "./compileExpr.js";
 import { compileStatement } from "../statement/compileStmt.js";
 

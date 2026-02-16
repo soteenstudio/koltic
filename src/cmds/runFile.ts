@@ -13,9 +13,9 @@ import { Parser } from "../parser/index.js";
 import { compileProgram } from "../compiler/index.js";
 import { LightVM } from "lightvm";
 import { setName } from "../error.js";
-import { formatDuration, warning, loadConfig } from "../utils/index.js";
+import { formatDuration, warning, loadConfig, getProcessTimes } from "../utils/index.js";
 import { figures } from "../utils/figures.js";
-import { Instruction } from '../vm/Instruction.js';
+import { Instruction } from 'lightvm';
 import fs from "node:fs";
 import path from "node:path";
 
@@ -28,32 +28,22 @@ export function runFile(filename: string, perform: boolean): void {
     const code = fs.readFileSync(filename, 'utf8');
   
     const totalStart = process.hrtime.bigint();
-    const tStart = process.hrtime.bigint();
-    const lexer = new Lexer(code);
-    const tokens = lexer.tokenize();
-    const tEnd = process.hrtime.bigint();
-    
-    const cStart = process.hrtime.bigint();
     const bytecode = compileProgram(filename);
-    const cEnd = process.hrtime.bigint();
-    
-    const bStart = process.hrtime.bigint();
+    const rStart = process.hrtime.bigint();
     vm.load(bytecode);
     vm.run();
-    const bEnd = process.hrtime.bigint();
+    const rEnd = process.hrtime.bigint();
     const totalEnd = process.hrtime.bigint();
     
+    const cTime = formatDuration(Number(getProcessTimes().cTime));
+    const rTime = formatDuration(Number(rEnd - rStart));
+    
     if (perform) {
-      const tTime = formatDuration(Number(tEnd - tStart) / 1_000_000);
-      const cTime = formatDuration(Number(cEnd - cStart) / 1_000_000);
-      const rTime = formatDuration(Number(bEnd - bStart) / 1_000_000);
       const totalTime = formatDuration(Number(totalEnd - totalStart) / 1_000_000);
       
       const lines = [
-        `${config.design === "legacy" || config.design === "modern" ? figures.pipe : " "} Tokenizing Time : ${tTime} ${config.design === "legacy" || config.design === "modern" ? figures.pipe : " "}`,
         `${config.design === "legacy" || config.design === "modern" ? figures.pipe : " "} Compile Time   : ${cTime} ${config.design === "legacy" || config.design === "modern" ? figures.pipe : " "}`,
-        `${config.design === "legacy" || config.design === "modern" ? figures.pipe : " "} Running Time   : ${rTime} ${config.design === "legacy" || config.design === "modern" ? figures.pipe : " "}`,
-        `${config.design === "legacy" || config.design === "modern" ? figures.pipe : " "} Total Time     : ${totalTime} ${config.design === "legacy" || config.design === "modern" ? figures.pipe : " "}`
+        `${config.design === "legacy" || config.design === "modern" ? figures.pipe : " "} Running Time   : ${rTime} ${config.design === "legacy" || config.design === "modern" ? figures.pipe : " "}`
       ];
       
       warning(lines, config);

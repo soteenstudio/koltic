@@ -41,7 +41,7 @@ import { Instruction } from "lightvm";
 import { types } from "../../utils/getValueType.js";
 
 export function compileStatement(
-  stmt: StStateme | Expression,
+  stmt: Statement | Expression,
   scope: Scope,
   code: Instruction[],
   moduleId: string

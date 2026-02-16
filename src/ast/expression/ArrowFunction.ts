@@ -9,10 +9,10 @@
  */
 
 import { BaseNode } from "../BaseNode.js";
-import { Expression } from "./Expression.js";
+import { BlockStatement } from "./BlockStatement.js";
 
 export interface ArrowFunction extends BaseNode {
   type: "ArrowFunction";
   params: any;
-  body: Expression;
+  body: BlockStatement;
 }

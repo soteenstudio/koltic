@@ -10,7 +10,7 @@
 
 import { Lexer } from "../lexer.js";
 import { Parser } from "../parser/index.js";
-import { run } from "../compiler/compiler.js";
+import { compileProgram } from "../compiler/index.js";
 import { LightVM, Instruction } from "lightvm";
 import { setName } from "../error.js";
 import { formatDuration, warning, loadConfig } from "../utils/index.js";
@@ -28,7 +28,6 @@ export function compileFile(filename: string, perform: boolean): void {
     
     const code = fs.readFileSync(filename, 'utf8');
   
-    const totalStart = process.hrtime.bigint();
     const tStart = process.hrtime.bigint();
     const lexer = new Lexer(code);
     const tokens = lexer.tokenize();
@@ -40,18 +39,29 @@ export function compileFile(filename: string, perform: boolean): void {
     const pEnd = process.hrtime.bigint();
     
     const cStart = process.hrtime.bigint();
-    const bytecode = run(ast);
+    const bytecode = compileProgram(filename);
     const cEnd = process.hrtime.bigint();
     
     const wStart = process.hrtime.bigint();
     const stringData = loader.stringifyLTC(bytecode);
+    const wEnd = process.hrtime.bigint();
     
     if (perform) {
-      const tTime = formatDuration(Number(tEnd - tStart) / 1_000_000);
-      const pTime = formatDuration(Number(pEnd - pStart) / 1_000_000);
-      const cTime = formatDuration(Number(cEnd - cStart) / 1_000_000);
-      const wTime = formatDuration(Number(wEnd - wStart) / 1_000_000);
-      const totalTime = formatDuration(Number(totalEnd - totalStart) / 1_000_000);
+      const tDiff = tEnd - tStart;
+      const pDiff = pEnd - pStart;
+      const cDiff = cEnd - cStart;
+      const wDiff = wEnd - wStart;
+      
+      const totalDiffSum = tDiff + pDiff + cDiff + wDiff;
+      
+      const toMs = (diff: bigint) => Number(diff) / 1_000_000;
+      
+      const tTime = formatDuration(toMs(tDiff));
+      const pTime = formatDuration(toMs(pDiff));
+      const cTime = formatDuration(toMs(cDiff));
+      const wTime = formatDuration(toMs(wDiff));
+      
+      const totalTime = formatDuration(toMs(totalDiffSum));
       
       const lines = [
         `${config.design === "legacy" || config.design === "modern" ? figures.pipe : " "} Tokenizing Time : ${tTime} ${config.design === "legacy" || config.design === "modern" ? figures.pipe : " "}`,

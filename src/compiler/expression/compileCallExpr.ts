@@ -32,7 +32,8 @@ export function compileCallExpr(node: CallExpression, code: Instruction[], scope
     println: "println",
     typeof: "typeof",
     string: "string",
-    number: "number",
+    integer: "integer",
+    float: "float",
     length: "length"
   };
   

@@ -15,7 +15,7 @@ import { Lexer } from "../lexer.js";
 import { run } from "./compiler.js";
 import { ModuleTable } from "../module/ModuleTable.js";
 import { LightCache } from "../cache/LightCache.js";
-import { hashSource, loadConfig } from "../utils/index.js";
+import { hashSource, loadConfig, setProcessTimes } from "../utils/index.js";
 import { LightVM } from "lightvm";
 
 const vm = new LightVM();
@@ -23,7 +23,9 @@ const optimizeBytecode = vm.tools().optimizeBytecode;
 
 export function compileProgram(entryFile: string) {
   const config = loadConfig();
+  let cEnd, cStart = 0;
   
+  cStart = process.hrtime.bigint();
   if (config.compilerOptions.cache) LightCache.init();
   const visited = new Set<string>();
 
@@ -68,16 +70,20 @@ export function compileProgram(entryFile: string) {
       const source = fs.readFileSync(id, "utf8");
       const hash = hashSource(source);
 
-      const raw = run(meta.ast, id);
+      const raw = run(meta.ast, id);      
       const optimized = optimizeBytecode(raw);
-      
+
       meta.bytecode = optimized;
       
       if (config.compilerOptions.cache) LightCache.set(id, hash, optimized);
         meta.ast = { type: "Program", body: [] };
     }
   }
-
+  
+  cEnd = process.hrtime.bigint();
+  setProcessTimes({
+    cTime: cEnd - cStart
+  });
   return optimizeBytecode(ModuleTable.get(path.resolve(entryFile))!.bytecode);
 }
 

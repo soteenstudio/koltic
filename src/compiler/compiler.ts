@@ -47,7 +47,7 @@ import { compileStatement } from "./statement/compileStmt.js";
 import { compileFunDecl } from "./statement/compileFunDecl.js";
 import { exprType } from "../utils/exprType.js";
 import { Scope } from "../parser/Scope.js";
-import { Instruction } from "../vm/Instruction.js";
+import { Instruction } from "lightvm";
 import { collectExport } from "../module/collectExport.js";
 export const functions: Record < string, FunctionDeclaration > = Object.create(null);
 
@@ -80,7 +80,7 @@ export function run(ast: Program, moduleId: string): Instruction[] {
     
     if (stmt.type === "VarDeclaration") {
       globalEnv.kinds[stmt.name] = stmt.kind;
-      globalEnv.types[stmt.name] = stmt.declaredType;
+      globalEnv.types[stmt.name] = exprType(stmt.expression, globalEnv);
       continue;
     }
   }

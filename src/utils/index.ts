@@ -13,3 +13,4 @@ export { formatDuration } from "./formatDuration.js";
 export { warning } from "./warning.js";
 export { loadConfig } from "./loadConfig.js";
 export { hashSource } from "./hashSource.js";
+export { setProcessTimes, getProcessTimes } from "./processTimes.js";
