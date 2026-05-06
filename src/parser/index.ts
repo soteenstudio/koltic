@@ -34,6 +34,7 @@ import {
   parseAddSub,
   parseMulDiv,
   parseNewExpr,
+  parseLogic,
 } from "./expression/index.js";
 import { CustomError } from "../error.js";
 import { autoInsertSemicolons } from "../utils/index.js";
@@ -178,8 +179,8 @@ export class Parser {
     if (token.type === "KEYWORD" && token.value === "new") {
       return parseNewExpr.call(this);
     }
-  
-    return parseComparison.call(this);
+    
+    return parseLogic.call(this);
   }
   
   public parseExprOrStmt(): Expression {

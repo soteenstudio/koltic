@@ -130,11 +130,13 @@ export function compileVarDecl(
       declared = "$Type.Anything";
     }
   }
+  if (s.expression.type !== "NoInitExpression") {
+    code.push(...compileExpr(s.expression, scope, false, moduleId));
+  }
   scope.kinds[s.identifier] = s.kind;
   scope.types[s.identifier] = declared + (nullable ? "?" : "");
   code.push(["val", s.identifier]);
   if (s.expression.type !== "NoInitExpression") {
-    code.push(...compileExpr(s.expression, scope, false, moduleId));
     code.push(["set", s.identifier]);
   }
   return [];

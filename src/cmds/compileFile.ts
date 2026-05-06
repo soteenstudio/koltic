@@ -24,7 +24,7 @@ const loader = vm.tools().loader;
 export function compileFile(filename: string, perform: boolean): void {
   if (filename.endsWith(".lt")) {
     setName(path.basename(filename));
-    const config = loadConfig(filename);
+    const config = loadConfig("lightconfig.json");
     
     const code = fs.readFileSync(filename, 'utf8');
   
@@ -44,6 +44,9 @@ export function compileFile(filename: string, perform: boolean): void {
     
     const wStart = process.hrtime.bigint();
     const stringData = loader.stringifyLTC(bytecode);
+    const outputFilename = filename.replace(".lt", ".ltc");
+    fs.writeFileSync(outputFilename, stringData); 
+    // Sekarang filenya beneran ketulis di folder yang sama!
     const wEnd = process.hrtime.bigint();
     
     if (perform) {

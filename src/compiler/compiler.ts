@@ -77,12 +77,6 @@ export function run(ast: Program, moduleId: string): Instruction[] {
       functions[f.name] = f;
       continue;
     }
-    
-    if (stmt.type === "VarDeclaration") {
-      globalEnv.kinds[stmt.name] = stmt.kind;
-      globalEnv.types[stmt.name] = exprType(stmt.expression, globalEnv);
-      continue;
-    }
   }
 
   for (const stmt of ast.body) {

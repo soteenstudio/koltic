@@ -10,11 +10,12 @@
 
 import { BaseNode } from "../BaseNode.js";
 import { FunctionDeclaration } from "./FunctionDeclaration.js";
+import { VarDeclaration } from "./VarDeclaration.js"
 
 export interface ClassDeclaration extends BaseNode {
   type: "ClassDeclaration";
   name: string;
   constructor?: FunctionDeclaration;
-  properties: VariableDeclaration[];
+  properties: VarDeclaration[];
   methods: FunctionDeclaration[];
 }

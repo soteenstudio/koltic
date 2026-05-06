@@ -30,7 +30,8 @@ export function runFile(filename: string, perform: boolean): void {
     const totalStart = process.hrtime.bigint();
     const bytecode = compileProgram(filename);
     const rStart = process.hrtime.bigint();
-    vm.load(bytecode);
+    //console.log("Awalan: ", bytecode, "Bytecode: ", JSON.stringify(bytecode));
+    vm.load(JSON.stringify(bytecode));
     vm.run();
     const rEnd = process.hrtime.bigint();
     const totalEnd = process.hrtime.bigint();

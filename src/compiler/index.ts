@@ -1,11 +1,8 @@
-/*  
- * Copyright 2026 SoTeen Studio  
- *  
- * Licensed under the Apache License, Version 2.0 (the "License");  
+/* * Copyright 2026 SoTeen Studio  
+ * * Licensed under the Apache License, Version 2.0 (the "License");  
  * you may not use this file except in compliance with the License.  
  * You may obtain a copy of the License at  
- *  
- *     http://www.apache.org/licenses/LICENSE-2.0  
+ * * http://www.apache.org/licenses/LICENSE-2.0  
  */
 
 import fs from "fs";
@@ -14,19 +11,18 @@ import { Parser } from "../parser/index.js";
 import { Lexer } from "../lexer.js";
 import { run } from "./compiler.js";
 import { ModuleTable } from "../module/ModuleTable.js";
-import { LightCache } from "../cache/LightCache.js";
-import { hashSource, loadConfig, setProcessTimes } from "../utils/index.js";
+import { setProcessTimes } from "../utils/index.js";
 import { LightVM } from "lightvm";
 
 const vm = new LightVM();
-const optimizeBytecode = vm.tools().optimizeBytecode;
 
 export function compileProgram(entryFile: string) {
-  const config = loadConfig();
-  let cEnd, cStart = 0;
+  const tools = vm.tools();
+  
+  let cEnd = 0n;
+  let cStart = 0n;
   
   cStart = process.hrtime.bigint();
-  if (config.compilerOptions.cache) LightCache.init();
   const visited = new Set<string>();
 
   function loadModule(filePath: string) {
@@ -35,24 +31,12 @@ export function compileProgram(entryFile: string) {
     visited.add(abs);
 
     const source = fs.readFileSync(abs, "utf8");
-    const hash = hashSource(source);
-    
-    if (config.compilerOptions.cache) {
-      const cachedBytecode = LightCache.get(abs, hash);
-      if (cachedBytecode) {
-        ModuleTable.set(abs, {
-          ast: { type: "Program", body: [] },
-          bytecode: cachedBytecode,
-          exports: {},
-        });
-        return;
-      }
-    }
     
     const tokens = new Lexer(source).tokenize();
     const parser = new Parser(tokens);
     const ast = parser.parseProgram();
 
+    // Langsung set tanpa mikirin hash atau cache
     ModuleTable.set(abs, { ast, exports: {} });
 
     for (const stmt of ast.body) {
@@ -63,28 +47,31 @@ export function compileProgram(entryFile: string) {
     }
   }
 
+  // Phase 1: Parsing & Dependency Discovery
   loadModule(entryFile);
 
+  // Phase 2: Bytecode Generation & Optimization
   for (const [id, meta] of ModuleTable) {
-    if (!meta.bytecode) {
-      const source = fs.readFileSync(id, "utf8");
-      const hash = hashSource(source);
-
-      const raw = run(meta.ast, id);      
-      const optimized = optimizeBytecode(raw);
-
-      meta.bytecode = optimized;
-      
-      if (config.compilerOptions.cache) LightCache.set(id, hash, optimized);
-        meta.ast = { type: "Program", body: [] };
-    }
+    // Generate bytecode dari AST
+    const raw = run(meta.ast, id);     
+    console.log("Raw: ", raw);
+    
+    // Optimasi lewat Rust bridge
+    const optimizedStr = tools.optimizeBytecode(JSON.stringify(raw));
+    const optimized = JSON.parse(optimizedStr);
+    
+    meta.bytecode = optimized;
+    
+    // Clear AST buat hemat memori setelah jadi bytecode
+    meta.ast = { type: "Program", body: [] };
   }
   
   cEnd = process.hrtime.bigint();
   setProcessTimes({
-    cTime: cEnd - cStart
+    cTime: Number(cEnd - cStart)
   });
-  return optimizeBytecode(ModuleTable.get(path.resolve(entryFile))!.bytecode);
+
+  return ModuleTable.get(path.resolve(entryFile))!.bytecode;
 }
 
 export function resolveImport(from: string, pkg: string) {

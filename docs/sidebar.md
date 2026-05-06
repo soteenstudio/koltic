@@ -3,4 +3,4 @@
   * [Installation](installation.md)
   * [Command and Flags](command-and-flags.md)
 * Keywords
-  * [Variable](variable.md)
+  * [Variables](variable.md)

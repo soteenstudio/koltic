@@ -27,10 +27,11 @@ export function collectExport(
     throw new Error(`InternalError: module '${moduleId}' not registered`);
   }
 
-  const type = getDeclaredTypeForVar(scope, stmt.type);
+  const type = getDeclaredTypeForVar(scope, stmt.name); // Gunakan stmt.name untuk cari tipenya
   if (!type) {
-    throw new Error(`Cannot export '${stmt.name}' without type`);
+    throw new Error(`Cannot export '${stmt.name}': Type not found in scope`);
   }
 
-  meta.exports[stmt.type] = { type };
+  // KEY-nya harus stmt.name biar match sama pas compile
+  meta.exports[stmt.name] = { type }; 
 }

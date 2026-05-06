@@ -15,6 +15,7 @@ import { compileExpr } from "../expression/compileExpr.js";
 import { compileStatement } from "./compileStmt.js";
 
 export function compileIfStmt(stmt: IfStatement, code: Instruction[], scope: Scope, moduleId: string) {
+  console.log("halaoapaoaooa");
   const s = stmt;
 
   code.push(...compileExpr(s.test, scope, false, moduleId));
@@ -25,22 +26,24 @@ export function compileIfStmt(stmt: IfStatement, code: Instruction[], scope: Sco
   compileStatement(s.consequent, scope, code, moduleId);
 
   if (s.alternate) {
+    // 1. Tambah jump di akhir IF biar gak bablas ke ELSE
     const jumpIndex = code.length;
     code.push(["jump", -1]);
 
-    const elseStart = code.length;
-    (code[ifFalseIndex] as ["if_false", number])[1] = elseStart;
+    // 2. Alamat ELSE dimulai TEPAT setelah jump tadi
+    const elseStart = jumpIndex - 1; 
+    console.log("Code length: ", elseStart);
+    
+    // 3. Update if_false punyanya IF buat lari ke sini kalau gagal
+    (code[ifFalseIndex] as [string, number])[1] = elseStart;
 
-    if ((s.alternate as any).type === "IfStatement") {
-      compileStatement(s.alternate as IfStatement, scope, code, moduleId);
-    } else {
-      compileStatement(s.alternate, scope, code, moduleId);
-    }
+    // 4. Compile isi ELSE
+    compileStatement(s.alternate, scope, code, moduleId);
 
-    (code[jumpIndex] as ["jump", number])[1] = code.length;
+    // 5. Update jump si IF tadi buat lari ke akhir seluruh IF-ELSE
+    (code[jumpIndex] as [string, number])[1] = code.length;
   } else {
-    const afterIf = code.length;
-    (code[ifFalseIndex] as ["if_false", number])[1] = afterIf;
+    (code[ifFalseIndex] as ["if_false", number])[1] = code.length;
   }
 
   return [];

@@ -51,7 +51,8 @@ export function compileLiteralExpr(node: Literal, code: Instruction[], scope: Sc
         code.push(["get", varName]);
         exprCount++;
       } else {
-        code.push(["push", part]);
+        const modifiedPart = part.replace(/ /g, "::space");
+        code.push(["push", modifiedPart]);
         exprCount++;
       }
     }

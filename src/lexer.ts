@@ -168,7 +168,7 @@ export class Lexer {
       }
 
       // Operators and punctuation
-      if ('+-*/=;(){}[]<>,:.!?<>$'.includes(ch)) {
+      if ('+-*/=;(){}[]<>,:.!?<>$%&|'.includes(ch)) {
         let op = ch;
         const nextCh = this.input[this.pos + 1];
         const nextNextCh = this.input[this.pos + 2];
@@ -216,8 +216,13 @@ export class Lexer {
           continue;
         }
       
+        if ((ch === "&" && nextCh === "&") || (ch === "|" && nextCh === "|")) {
+          op += nextCh;
+          this.advance();
+        }
+        
         // gabung ++ atau --
-        if ((ch === '+' && nextCh === '+') || (ch === '-' && nextCh === '-')) {
+        else if ((ch === '+' && nextCh === '+') || (ch === '-' && nextCh === '-')) {
           op += nextCh;
           this.advance();
         }

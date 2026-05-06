@@ -2,6 +2,7 @@
 /node_modules/
 /tests/
 /assembly/src/temperal/
+/.trash/
 lightconfig.json
 .npmignore
 *.tgz

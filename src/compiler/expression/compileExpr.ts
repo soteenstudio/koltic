@@ -20,11 +20,11 @@ import { compileArrowExpr } from "./compileArrowExpr.js";
 import { compileFunctionExpr } from "./compileFunExpr.js";
 import { CustomError } from "../../error.js";
 import { Instruction } from "lightvm";
-import { Expression, CallExpression, ObjectLiteral } from "../../ast/index.js";
+import { Expression, Statement, CallExpression, ObjectLiteral } from "../../ast/index.js";
 import { Scope } from "../../parser/Scope.js";
 
 export function compileExpr(
-  node: Expression,
+  node: Expression | Statement,
   scope: Scope,
   isTypeCheck: boolean = false,
   moduleId: string

@@ -19,36 +19,28 @@ export function compileObjectLit(
   scope: Scope,
   moduleId: string
 ): Instruction[] {
-
   const propCount = node.properties.length;
 
   for (const prop of node.properties) {
-    code.push(["push", prop.key]);
+    // 1. Key
+    const keyName = typeof prop.key === 'string' ? prop.key : (prop.key as any).name;
+    code.push(["push", String(keyName)]);
 
-    if (prop.value.type === "FunctionExpression") {
-      const fn = prop.value as FunctionExpression;
+    // 2. Value
+    const valueInstructions = prop.value.type === "FunctionExpression" 
+      ? compileExpr({ ...prop.value, params: [{ name: "this" }, ...(prop.value as any).params] }, { ...scope, vars: { ...scope.vars }, kinds: { ...scope.kinds }, types: { ...scope.types } }, false, moduleId)
+      : compileExpr(prop.value, scope, false, moduleId);
 
-      const methodScope: Scope = {
-        ...scope,
-        vars: { ...scope.vars },
-        kinds: { ...scope.kinds },
-        types: { ...scope.types },
-      };
-
-      compileExpr(
-        {
-          ...fn,
-          params: [{ name: "this" }, ...fn.params],
-        },
-        methodScope, false, moduleId
-      );
-
-    } else {
-      compileExpr(prop.value, scope, false, moduleId);
+    if (Array.isArray(valueInstructions)) {
+      code.push(...valueInstructions);
     }
   }
 
-  code.push(["make_obj", propCount]);
+  // TRIK: Paksa propCount jadi angka murni pake bitwise OR 0
+  // Ini buat mastiin JS nggak ngirim object aneh-aneh ke Loader
+  const finalCount = propCount | 0; 
+  
+  code.push(["make_obj", finalCount]);
 
   return code;
 }

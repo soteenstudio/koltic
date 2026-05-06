@@ -71,5 +71,6 @@ export function compileFunDecl(f: FunctionDeclaration, globalScope: Scope, code:
 
   code.push(["stop"]);
   (code[jumpOverIndex] as ["jump", number])[1] = code.length;
+  console.log(code);
   return [];
 }

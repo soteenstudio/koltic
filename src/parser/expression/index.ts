@@ -15,3 +15,4 @@ export { parseUpdateExpression } from "./parseUpdExpr.js";
 export { parseObjectLiteral } from "./parseObjectLit.js";
 export { parseArrayLiteral } from "./parseArrayLit.js";
 export { parseNewExpr } from "./parseNewExpr.js";
+export { parseLogic } from "./parseLogic.js";

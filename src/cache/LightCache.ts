@@ -64,7 +64,7 @@ export class LightCache {
     const meta = this.index[moduleId];
     if (!meta || meta.hash !== hash) return null;
   
-    const bytecode: Instruction[] = loader.parseLTC(
+    const bytecode: Instruction[] = loader.parseLTCArray(
       fs.readFileSync(meta.bytecodeFile, "utf8")
     );
   

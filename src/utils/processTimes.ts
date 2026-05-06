@@ -1,9 +1,9 @@
 interface processTimes {
-  tTime: number;
-  pTime: number;
-  cTime: number;
-  wTime: number;
-  oTime: number
+  tTime?: number;
+  pTime?: number;
+  cTime?: number;
+  wTime?: number;
+  oTime?: number;
 }
 
 let data: processTimes = {

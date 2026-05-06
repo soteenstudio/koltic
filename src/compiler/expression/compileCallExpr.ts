@@ -31,10 +31,14 @@ export function compileCallExpr(node: CallExpression, code: Instruction[], scope
     print: "print",
     println: "println",
     typeof: "typeof",
-    string: "string",
-    integer: "integer",
-    float: "float",
-    length: "length"
+    string: "to_string",
+    integer: "to_integer",
+    long: "to_long",
+    float: "to_float",
+    double: "to_double",
+    length: "length",
+    inspectObject: "inspect_obj",
+    inspectArray: "inspect_arr",
   };
   
   const manyArg: string[] = ["print", "println"];
@@ -66,6 +70,7 @@ export function compileCallExpr(node: CallExpression, code: Instruction[], scope
       code.push([builtins[call.callee.name] as any]);
     }
   
+    console.log(code);
     return code;
   }
 

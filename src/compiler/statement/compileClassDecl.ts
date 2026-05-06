@@ -30,12 +30,12 @@ export function compileClassDecl(stmt: ClassDeclaration, code: Instruction[], sc
   };
 
   for (const prop of s.properties) {
-    const name = prop.name;
+    const name = prop.identifier;
     const access = (prop as any).access ?? "public";
-    const mutable = prop.mutable ?? false;
+    const mutable = prop.kind ?? false;
 
-    if (prop.initializer) {
-      code.push(...compileExpr(prop.initializer, classScope, false, moduleId));
+    if (prop.expression) {
+      code.push(...compileExpr(prop.expression, classScope, false, moduleId));
       code.push(["get", className]);
       code.push(["set_prop", name]);
     } else {

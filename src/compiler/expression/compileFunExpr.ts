@@ -50,7 +50,10 @@ export function compileFunctionExpr(
     fnScope.types[p] = "any";
   }
 
-  compileStatement(node.body, fnScope, code, moduleId);
+  // Ganti baris 53 jadi kayak gini:
+  node.body.forEach(stmt => {
+    compileStatement(stmt, fnScope, code, moduleId);
+  });
 
   code.push(["return"]);
 
