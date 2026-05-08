@@ -11,7 +11,7 @@
 import { Lexer } from "../lexer.js";
 import { Parser } from "../parser/index.js";
 import { compileProgram } from "../compiler/index.js";
-import { LightVM } from "lightvm";
+import { LightVM, Capability } from "lightvm";
 import { setName } from "../error.js";
 import { formatDuration, warning, loadConfig, getProcessTimes } from "../utils/index.js";
 import { figures } from "../utils/figures.js";
@@ -19,7 +19,7 @@ import { Instruction } from 'lightvm';
 import fs from "node:fs";
 import path from "node:path";
 
-const vm = new LightVM(["observe", "control", "debug"]);
+const vm = new LightVM([Capability.Observe, Capability.Control, Capability.Debug]);
 export function runFile(filename: string, perform: boolean): void {
   if (filename.endsWith(".lt")) {
     setName(path.basename(filename));
