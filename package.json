@@ -1,7 +1,22 @@
 {
   "name": "koltic",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A programming language designed with high strictness at compilation.",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/soteenstudio/koltic.git"
+  },
+  "bugs": {
+    "url": "https://github.com/soteenstudio/koltic/issues"
+  },
+  "homepage": "https://github.com/soteenstudio/koltic#readme",
+  "funding": "https://trakteer.id/soteen_studio/tip?quantity=1",
   "type": "module",
   "bin": {
     "koltic": "dist/index.min.mjs"
@@ -12,15 +27,17 @@
     "typecheck": "tsc"
   },
   "keywords": [
-    "lightscript"
+    "koltic",
+    "strict",
+    "lightvm",
+    "speed"
   ],
   "author": "SoTeen Studio",
   "license": "Apache-2.0",
   "dependencies": {
     "chalk": "^5.6.2",
     "commander": "^14.0.1",
-    "koltic": "file:koltic-0.1.0-notable.tgz",
-    "lightvm": "^0.1.0-alpha.8-nightly.20260813.10da52a"
+    "lightvm": "^0.1.0-alpha.9"
   },
   "devDependencies": {
     "@types/node": "^24.12.2",
