@@ -9,7 +9,7 @@
  */
 
 import { Literal } from "../../ast/index.js";
-import { Instruction } from "lightvm";
+import { Instructions } from "lightvm";
 import { Scope } from "../../parser/Scope.js";
 import { Lexer } from "../../lexer.js";
 import { Parser } from "../../parser/index.js";
@@ -17,7 +17,7 @@ import { compileExpr } from "../expression/compileExpr.js";
 import { findScopeForVar } from "../../utils/index.js";
 import { CustomError } from "../../error.js";
 
-export function compileLiteralExpr(node: Literal, code: Instruction[], scope: Scope, moduleId: string) {
+export function compileLiteralExpr(node: Literal, code: Instructions[], scope: Scope, moduleId: string) {
   const val = node.value;
 
   if (typeof val === "string") {

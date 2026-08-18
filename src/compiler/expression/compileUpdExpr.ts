@@ -10,11 +10,11 @@
 
 import { UpdateExpression, Identifier } from "../../ast/index.js";
 import { Scope } from "../../parser/Scope.js";
-import { Instruction } from "lightvm";
+import { Instructions } from "lightvm";
 import { CustomError } from "../../error.js";
 import { findScopeForVar, normalizeType, isNumberFamily } from "../../utils/index.js";
 
-export function compileUpdExpr(node: UpdateExpression, code: Instruction[], scope: Scope) {
+export function compileUpdExpr(node: UpdateExpression, code: Instructions[], scope: Scope) {
   const upd = node;
   const id = (upd.argument as Identifier).name;
   const targetScope = findScopeForVar(scope, id);

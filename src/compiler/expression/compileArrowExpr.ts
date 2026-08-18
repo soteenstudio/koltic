@@ -8,7 +8,7 @@
  *     http://www.apache.org/licenses/LICENSE-2.0  
  */
 
-import { Instruction } from "lightvm";
+import { Instructions } from "lightvm";
 import { Scope } from "../../parser/Scope.js";
 import { ArrowFunction, BlockStatement } from "../../ast/index.js";
 import { compileExpr } from "./compileExpr.js";
@@ -16,10 +16,10 @@ import { compileStatement } from "../statement/compileStmt.js";
 
 export function compileArrowExpr(
   node: ArrowFunction,
-  code: Instruction[],
+  code: Instructions[],
   scope: Scope,
   moduleId: string
-): Instruction[] {
+): Instructions[] {
   const fnScope: Scope = {
     kinds: {},
     types: {},
@@ -30,7 +30,7 @@ export function compileArrowExpr(
     fnScope.kinds[param.name] = "val";
   }
 
-  const bodyCode: Instruction[] = [];
+  const bodyCode: Instructions[] = [];
   
   if (node.body.type === "BlockStatement") {
     for (const stmt of node.body.body) {

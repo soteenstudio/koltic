@@ -8,12 +8,12 @@
  *     http://www.apache.org/licenses/LICENSE-2.0  
  */
 
-import { Instruction } from "lightvm";
+import { Instructions } from "lightvm";
 import { Scope } from "../../parser/Scope.js";
 import { NewExpression } from "../../ast/index.js";
 import { compileExpr } from "../expression/compileExpr.js";
 
-export function compileNewExpr(expr: NewExpression, code: Instruction[], scope: Scope, moduleId: string) {
+export function compileNewExpr(expr: NewExpression, code: Instructions[], scope: Scope, moduleId: string) {
   const className = expr.className;
   const args = expr.args;
 

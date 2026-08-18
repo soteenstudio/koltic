@@ -9,7 +9,7 @@
  */
 
 import { BinaryExpression } from "../../ast/index.js";
-import { Instruction } from "lightvm";
+import { Instructions } from "lightvm";
 import { Scope } from "../../parser/Scope.js";
 import { exprType, normalizeType, getValueType } from "../../utils/index.js";
 import { CustomError } from "../../error.js";
@@ -26,7 +26,7 @@ function getLeftType(leftType: string): string {
 }
 
 
-export function compileBinaryExpr(node: BinaryExpression, code: Instruction[], scope: Scope, moduleId: string) {
+export function compileBinaryExpr(node: BinaryExpression, code: Instructions[], scope: Scope, moduleId: string) {
   const bin = node;
   const left = compileExpr(bin.left, scope, false, moduleId);
   const right = compileExpr(bin.right, scope, false, moduleId);

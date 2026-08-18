@@ -14,11 +14,11 @@ import { normalizeType, getValueType, getDeclaredTypeForVar, exprType, isNumberF
 import { types } from "../../utils/getValueType.js";
 import { compileExpr } from "../expression/compileExpr.js";
 import { Scope } from "../../parser/Scope.js";
-import { Instruction } from "lightvm";
+import { Instructions } from "lightvm";
 
 export function compileVarDecl(
   stmt: VarDeclaration,
-  code: Instruction[],
+  code: Instructions[],
   scope: Scope,
   moduleId: string
 ) {

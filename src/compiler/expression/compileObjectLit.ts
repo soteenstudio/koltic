@@ -9,16 +9,16 @@
  */
 
 import { ObjectLiteral, FunctionExpression } from "../../ast/index.js";
-import { Instruction } from "lightvm";
+import { Instructions } from "lightvm";
 import { Scope } from "../../parser/Scope.js";
 import { compileExpr } from "./compileExpr.js";
 
 export function compileObjectLit(
   node: ObjectLiteral,
-  code: Instruction[],
+  code: Instructions[],
   scope: Scope,
   moduleId: string
-): Instruction[] {
+): Instructions[] {
   const propCount = node.properties.length;
 
   for (const prop of node.properties) {
