@@ -9,12 +9,12 @@
  */
 
 import { Identifier } from "../../ast/index.js";
-import { Instruction } from "lightvm";
+import { Instructions } from "lightvm";
 import { Scope } from "../../parser/Scope.js";
 import { findScopeForVar } from "../../utils/index.js";
 import { CustomError } from "../../error.js";
 
-export function compileIdentifierExpr(node: Identifier, code: Instruction[], scope: Scope, isTypeCheck: boolean) {
+export function compileIdentifierExpr(node: Identifier, code: Instructions[], scope: Scope, isTypeCheck: boolean) {
   const id = node;
   const targetScope = findScopeForVar(scope, id.name);
   if (!targetScope) {

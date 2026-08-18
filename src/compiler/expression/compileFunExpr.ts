@@ -8,7 +8,7 @@
  *     http://www.apache.org/licenses/LICENSE-2.0  
  */
 
-import { Instruction } from "lightvm";
+import { Instructions } from "lightvm";
 import { Scope } from "../../parser/Scope.js";
 import { FunctionExpression } from "../../ast/index.js";
 import { compileStatement } from "../statement/compileStmt.js";
@@ -17,10 +17,10 @@ let anonFnId = 0;
 
 export function compileFunctionExpr(
   node: FunctionExpression,
-  code: Instruction[],
+  code: Instructions[],
   scope: Scope,
   moduleId: string
-): Instruction[] {
+): Instructions[] {
 
   const fnName = `__fn_${anonFnId++}`;
   const params = ["this", ...node.params.map(p => p.name)];

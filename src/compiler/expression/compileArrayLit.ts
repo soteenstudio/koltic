@@ -9,16 +9,16 @@
  */
 
 import { ArrayLiteral, Expression } from "../../ast/index.js";
-import { Instruction } from "lightvm";
+import { Instructions } from "lightvm";
 import { Scope } from "../../parser/Scope.js";
 import { compileExpr } from "./compileExpr.js";
 
 export function compileArrayLit(
   node: ArrayLiteral,
-  code: Instruction[],
+  code: Instructions[],
   scope: Scope,
   moduleId: string
-): Instruction[] {
+): Instructions[] {
   const elemCount = node.elements.length;
 
   for (const elem of node.elements) {

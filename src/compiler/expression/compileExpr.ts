@@ -19,7 +19,7 @@ import { compileUpdExpr } from "./compileUpdExpr.js";
 import { compileArrowExpr } from "./compileArrowExpr.js";
 import { compileFunctionExpr } from "./compileFunExpr.js";
 import { CustomError } from "../../error.js";
-import { Instruction } from "lightvm";
+import { Instructions } from "lightvm";
 import { Expression, Statement, CallExpression, ObjectLiteral } from "../../ast/index.js";
 import { Scope } from "../../parser/Scope.js";
 
@@ -28,8 +28,8 @@ export function compileExpr(
   scope: Scope,
   isTypeCheck: boolean = false,
   moduleId: string
-): Instruction[] {
-  const code: Instruction[] = [];
+): Instructions[] {
+  const code: Instructions[] = [];
   switch (node.type) {
     case "Literal": {
       return compileLiteralExpr(node, code, scope, moduleId);

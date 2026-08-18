@@ -9,12 +9,12 @@
  */
 
 import { IfStatement } from "../../ast/index.js";
-import { Instruction } from "lightvm";
+import { Instructions } from "lightvm";
 import { Scope } from "../../parser/Scope.js";
 import { compileExpr } from "../expression/compileExpr.js";
 import { compileStatement } from "./compileStmt.js";
 
-export function compileIfStmt(stmt: IfStatement, code: Instruction[], scope: Scope, moduleId: string) {
+export function compileIfStmt(stmt: IfStatement, code: Instructions[], scope: Scope, moduleId: string) {
   console.log("halaoapaoaooa");
   const s = stmt;
 

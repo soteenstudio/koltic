@@ -8,13 +8,13 @@
  *     http://www.apache.org/licenses/LICENSE-2.0  
  */
 
-import { Instruction } from "lightvm";
+import { Instructions } from "lightvm";
 import { Scope } from "../../parser/Scope.js";
 import { ClassDeclaration, VarDeclaration, FunctionDeclaration } from "../../ast/index.js";
 import { compileExpr } from "../expression/compileExpr.js";
 import { compileStatement } from "./compileStmt.js";
 
-export function compileClassDecl(stmt: ClassDeclaration, code: Instruction[], scope: Scope, moduleId: string) {
+export function compileClassDecl(stmt: ClassDeclaration, code: Instructions[], scope: Scope, moduleId: string) {
   const s = stmt;
   const className = s.name;
 

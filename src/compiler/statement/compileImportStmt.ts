@@ -13,12 +13,12 @@ import { ModuleTable } from "../../module/ModuleTable.js";
 import { resolveImport } from "../index.js";
 import { ImportStatement } from "../../ast/index.js";
 import { Scope } from "../../parser/Scope.js";
-import { Instruction } from "lightvm";
+import { Instructions } from "lightvm";
 
 export function compileImportStmt(
   stmt: ImportStatement,
   scope: Scope,
-  code: Instruction[],
+  code: Instructions[],
   CURRENT_MODULE_ID: string
 ) {
   const { package: pkg, name } = stmt;

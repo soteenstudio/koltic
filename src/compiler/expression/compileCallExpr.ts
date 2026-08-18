@@ -9,7 +9,7 @@
  */
 
 import { CallExpression, Expression } from "../../ast/index.js";
-import { Instruction } from "lightvm";
+import { Instructions } from "lightvm";
 import { Scope } from "../../parser/Scope.js";
 import { CustomError } from "../../error.js";
 import { compileExpr } from "./compileExpr.js";
@@ -23,7 +23,7 @@ import {
 } from "../../utils/index.js";
 import { functions } from "../compiler.js";
 
-export function compileCallExpr(node: CallExpression, code: Instruction[], scope: Scope, moduleId: string): Instruction[] {
+export function compileCallExpr(node: CallExpression, code: Instructions[], scope: Scope, moduleId: string): Instructions[] {
   const call = node;
 
   // 🔹 built-in functions

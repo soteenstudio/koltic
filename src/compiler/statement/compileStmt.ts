@@ -37,15 +37,15 @@ import { compileImportStmt } from "./compileImportStmt.js";
 import { compileExportStmt } from "./compileExportStmt.js";
 import { compileExpr } from "../expression/compileExpr.js";
 import { Scope } from "../../parser/Scope.js";
-import { Instruction } from "lightvm";
+import { Instructions } from "lightvm";
 import { types } from "../../utils/getValueType.js";
 
 export function compileStatement(
   stmt: Statement | Expression,
   scope: Scope,
-  code: Instruction[],
+  code: Instructions[],
   moduleId: string
-): Instruction[] {
+): Instructions[] {
   switch (stmt.type) {
     case "VarDeclaration": {
       return compileVarDecl(stmt, code, scope, moduleId);
