@@ -12,7 +12,7 @@ import { Lexer } from "../lexer.js";
 import { run } from "./compiler.js";
 import { ModuleTable } from "../module/ModuleTable.js";
 import { setProcessTimes } from "../utils/index.js";
-import { LightVM } from "lightvm";
+import { LightVM, Capability } from "lightvm";
 
 const vm = new LightVM();
 
@@ -53,14 +53,12 @@ export function compileProgram(entryFile: string) {
   // Phase 2: Bytecode Generation & Optimization
   for (const [id, meta] of ModuleTable) {
     // Generate bytecode dari AST
-    const raw = run(meta.ast, id);     
-    console.log("Raw: ", raw);
+    const raw = run(meta.ast, id);
     
     // Optimasi lewat Rust bridge
-    const optimizedStr = tools.optimizeBytecode(JSON.stringify(raw));
-    const optimized = JSON.parse(optimizedStr);
+    const optimizedStr = tools.optimizeBytecode(raw);
     
-    meta.bytecode = optimized;
+    meta.bytecode = optimizedStr;
     
     // Clear AST buat hemat memori setelah jadi bytecode
     meta.ast = { type: "Program", body: [] };

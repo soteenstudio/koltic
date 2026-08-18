@@ -19,7 +19,7 @@ import { Instruction } from 'lightvm';
 import fs from "node:fs";
 import path from "node:path";
 
-const vm = new LightVM([Capability.Observe, Capability.Control, Capability.Debug]);
+const vm = new LightVM({ caps: [Capability.Observe, Capability.Control, Capability.Debug] });
 export function runFile(filename: string, perform: boolean): void {
   if (filename.endsWith(".lt")) {
     setName(path.basename(filename));
