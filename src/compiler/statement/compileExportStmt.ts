@@ -12,12 +12,12 @@ import { ModuleTable } from "../../module/ModuleTable.js";
 import { CustomError } from "../../error.js";
 import { ExportStatement } from "../../ast/index.js";
 import { Scope } from "../../parser/Scope.js";
-import { Instruction } from "lightvm";
+import { Instructions } from "lightvm";
 
 export function compileExportStmt(
   stmt: ExportStatement,
   scope: Scope,
-  code: Instruction[],
+  code: Instructions[],
   moduleId: string
 ) {
   console.log("..................");

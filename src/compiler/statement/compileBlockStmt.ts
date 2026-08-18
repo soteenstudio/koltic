@@ -10,10 +10,10 @@
 
 import { BlockStatement, Statement } from "../../ast/index.js";
 import { Scope } from "../../parser/Scope.js";
-import { Instruction } from "lightvm";
+import { Instructions } from "lightvm";
 import { compileStatement } from "./compileStmt.js";
 
-export function compileBlockStmt(stmt: BlockStatement, code: Instruction[], scope: Scope, moduleId: string) {
+export function compileBlockStmt(stmt: BlockStatement, code: Instructions[], scope: Scope, moduleId: string) {
   const s = stmt;
   const blockScope: Scope = {
     kinds: Object.create(null),

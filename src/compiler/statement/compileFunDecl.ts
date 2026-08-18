@@ -12,9 +12,9 @@ import { BlockStatement, FunctionDeclaration } from "../../ast/index.js";
 import { compileStatement } from "./compileStmt.js";
 import { normalizeType } from "../../utils/index.js";
 import { Scope } from "../../parser/Scope.js";
-import { Instruction } from "lightvm";
+import { Instructions } from "lightvm";
 
-export function compileFunDecl(f: FunctionDeclaration, globalScope: Scope, code: Instruction[], moduleId: string) {
+export function compileFunDecl(f: FunctionDeclaration, globalScope: Scope, code: Instructions[], moduleId: string) {
   const jumpOverIndex = code.length;
   code.push(["jump", -1]);
 

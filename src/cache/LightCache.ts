@@ -10,10 +10,10 @@
 
 import fs from "fs";
 import path from "path";
-import { LightVM, Instruction } from "lightvm";
+import { LightVM, Instructions } from "lightvm";
 
 const vm = new LightVM();
-const loader = vm.tools().loader;
+const loader = vm.tools();
 
 const CACHE_VERSION = 1;
 const CACHE_DIR = ".lightcache";
@@ -31,7 +31,7 @@ type CacheIndex = {
 };
 
 export class LightCache {
-  private static mem = new Map<string, Instruction[]>();
+  private static mem = new Map<string, Instructions[]>();
 
   private static index: Record<string, CacheMeta> = {};
 
@@ -50,7 +50,7 @@ export class LightCache {
     this.index = data.modules;
   }
 
-  static get(moduleId: string, hash: string): Instruction[] | null {
+  static get(moduleId: string, hash: string): Instructions[] | null {
     const memHit = this.mem.get(moduleId);
     if (memHit) {
       const meta = this.index[moduleId];
@@ -64,7 +64,7 @@ export class LightCache {
     const meta = this.index[moduleId];
     if (!meta || meta.hash !== hash) return null;
   
-    const bytecode: Instruction[] = loader.parseLTCArray(
+    const bytecode: Instructions[] = loader.parseLTCArray(
       fs.readFileSync(meta.bytecodeFile, "utf8")
     );
   
@@ -75,7 +75,7 @@ export class LightCache {
   /**
    * 🔥 Cache MISS path
    */
-  static set(moduleId: string, hash: string, bytecode: Instruction[]) {
+  static set(moduleId: string, hash: string, bytecode: Instructions[]) {
     const id = hash.slice(0, 8);
     const ltcFile = path.join(MODULE_DIR, id + ".ltc");
 

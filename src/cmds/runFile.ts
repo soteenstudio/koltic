@@ -15,7 +15,7 @@ import { LightVM, Capability } from "lightvm";
 import { setName } from "../error.js";
 import { formatDuration, warning, loadConfig, getProcessTimes } from "../utils/index.js";
 import { figures } from "../utils/figures.js";
-import { Instruction } from 'lightvm';
+import { Instructions } from 'lightvm';
 import fs from "node:fs";
 import path from "node:path";
 
@@ -59,13 +59,13 @@ export function runFile(filename: string, perform: boolean): void {
     const rEnd = process.hrtime.bigint();
     
     const tStart = process.hrtime.bigint();
-    const data: Instruction[] = code
+    const data: Instructions[] = code
       .split(';')
       .map((item: string) => item.trim())
       .filter(Boolean)
       .map((item: string) => {
         const parts: string[] = item.split(/\s+/); // split by whitespace
-        const op: Instruction[0] = parts[0] as Instruction[0];
+        const op: Instructions[0] = parts[0] as Instructions[0];
         const args: (number | string | undefined)[]  = parts.slice(1).map((arg: string) => {
           const num: number = Number(arg);
           return isNaN(num) ? arg : num;
@@ -74,7 +74,7 @@ export function runFile(filename: string, perform: boolean): void {
         // pad supaya panjangnya selalu 5 (op + 4 arg)
         while (args.length < 4) args.push(undefined);
     
-        return [op, ...args] as Instruction;
+        return [op, ...args] as Instructions;
       });
     const tEnd = process.hrtime.bigint();
     

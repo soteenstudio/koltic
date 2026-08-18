@@ -47,11 +47,11 @@ import { compileStatement } from "./statement/compileStmt.js";
 import { compileFunDecl } from "./statement/compileFunDecl.js";
 import { exprType } from "../utils/exprType.js";
 import { Scope } from "../parser/Scope.js";
-import { Instruction } from "lightvm";
+import { Instructions } from "lightvm";
 import { collectExport } from "../module/collectExport.js";
 export const functions: Record < string, FunctionDeclaration > = Object.create(null);
 
-export function run(ast: Program, moduleId: string): Instruction[] {
+export function run(ast: Program, moduleId: string): Instructions[] {
   const globalEnv: Scope = {
     kinds: Object.create(null),
     types: Object.create(null),
@@ -59,7 +59,7 @@ export function run(ast: Program, moduleId: string): Instruction[] {
   Object.assign(functions, Object.create(null));
   globalEnv.kinds = globalEnv.kinds || Object.create(null);
   globalEnv.types = globalEnv.types || Object.create(null);
-  const bytecode: Instruction[] = [];
+  const bytecode: Instructions[] = [];
 
   for (const stmt of ast.body) {
     if (stmt.type === "FunctionDeclaration") {

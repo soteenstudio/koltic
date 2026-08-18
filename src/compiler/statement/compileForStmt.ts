@@ -9,12 +9,12 @@
  */
 
 import { ForStatement } from "../../ast/index.js";
-import { Instruction } from "lightvm";
+import { Instructions } from "lightvm";
 import { Scope } from "../../parser/Scope.js";
 import { compileExpr } from "../expression/compileExpr.js";
 import { compileStatement } from "./compileStmt.js";
 
-export function compileForStmt(stmt: ForStatement, code: Instruction[], scope: Scope, moduleId: string) {
+export function compileForStmt(stmt: ForStatement, code: Instructions[], scope: Scope, moduleId: string) {
   const s = stmt;
   const forScope: Scope = {
     kinds: Object.create(null),

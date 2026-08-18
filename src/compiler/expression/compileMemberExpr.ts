@@ -8,12 +8,12 @@
  *     http://www.apache.org/licenses/LICENSE-2.0  
  */
 
-import { Instruction } from "lightvm";
+import { Instructions } from "lightvm";
 import { Scope } from "../../parser/Scope.js";
 import { MemberExpression, Expression } from "../../ast/index.js";
 import { compileExpr } from "./compileExpr.js";
 
-export function compileMemberExpr(node: MemberExpression, code: Instruction[], scope: Scope, moduleId: string): Instruction[] {
+export function compileMemberExpr(node: MemberExpression, code: Instructions[], scope: Scope, moduleId: string): Instructions[] {
   code.push(...compileExpr(node.object, scope, false, moduleId));
 
   if (typeof node.property === "string") {
