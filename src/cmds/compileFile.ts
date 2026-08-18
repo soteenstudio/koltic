@@ -19,7 +19,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const vm = new LightVM();
-const loader = vm.tools().loader;
+const loader = vm.tools();
 
 export function compileFile(filename: string, perform: boolean): void {
   if (filename.endsWith(".lt")) {
